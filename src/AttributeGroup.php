@@ -25,16 +25,18 @@ class AttributeGroup {
      * @param string $type
      * @param $attributes
      */
-    public function __construct($type, $attributes) {
+    public function __construct($type, $attributes)
+    {
         $this->type = $type;
         $this->attributes = $attributes;
     }
 
-    public static function buildFromBinary($data) {
+    public static function buildFromBinary($data)
+    {
         $attributeGroups = [];
         $splitAttributeGroups = self::splitAttributeGroupData($data);
 
-        foreach($splitAttributeGroups as $attributeGroupData) {
+        foreach ($splitAttributeGroups as $attributeGroupData) {
             $type = ord(substr($attributeGroupData, 0, 1));
             $attributeData = substr($attributeGroupData, 1);
             $attributes = Attribute::buildFromBinary($attributeData);
@@ -45,29 +47,30 @@ class AttributeGroup {
         return $attributeGroups;
     }
 
-    protected function splitAttributeGroupData($data) {
+    protected function splitAttributeGroupData($data)
+    {
         $attributeGroupData = [];
 
-        if(!$data) {
+        if (!$data) {
             return $attributeGroupData;
         }
 
         $currentAttributeGroup = -1;
         $bytePos = 0;
 
-        while(($byte = substr($data, $bytePos, 1)) !== false) {
-            switch(ord($byte)) {
+        while (($byte = substr($data, $bytePos, 1)) !== false) {
+            switch (ord($byte)) {
                 case self::OPERATION_ATTRIBUTES_TAG:
                 case self::JOB_ATTRIBUTES_TAG:
                 case self::PRINTER_ATTRIBUTES_TAG:
                     $currentAttributeGroup++;
                     break;
             }
-            if($currentAttributeGroup == -1) {
+            if ($currentAttributeGroup == -1) {
                 //Invalid data?
             }
 
-            if(!isset($attributeGroupData[$currentAttributeGroup])) {
+            if (!isset($attributeGroupData[$currentAttributeGroup])) {
                 $attributeGroupData[$currentAttributeGroup] = $byte;
             } else {
                 $attributeGroupData[$currentAttributeGroup] .= $byte;
@@ -76,12 +79,12 @@ class AttributeGroup {
         }
 
         return $attributeGroupData;
-
     }
 
-    public function toBinary() {
+    public function toBinary()
+    {
         $data = chr($this->getType());
-        foreach($this->getAttributes() as $attribute) {
+        foreach ($this->getAttributes() as $attribute) {
             $data .= $attribute->toBinary();
         }
 
@@ -91,25 +94,27 @@ class AttributeGroup {
     /**
      * @return int
      */
-    public function getType() {
+    public function getType()
+    {
         return $this->type;
     }
 
     /**
      * @return Attribute[]
      */
-    public function getAttributes() {
+    public function getAttributes()
+    {
         return $this->attributes;
     }
 
-    public function getAttributeByName($name) {
-        foreach($this->getAttributes() as $attribute) {
-            if(strtolower($attribute->getName()) == strtolower($name)) {
+    public function getAttributeByName($name)
+    {
+        foreach ($this->getAttributes() as $attribute) {
+            if (strtolower($attribute->getName()) == strtolower($name)) {
                 return $attribute;
             }
         }
 
         return null;
     }
-
 }
