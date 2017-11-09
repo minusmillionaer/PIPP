@@ -1,5 +1,5 @@
 {
-    "name": "johnvandeweghe/pipp",
+    "name": "minusmillonaer/php-ipp-server",
     "description": "An IPP parser for PHP, following RFC 2910/2911",
     "type": "library",
     "require-dev": {
@@ -9,7 +9,11 @@
         {
             "name": "John VanDeWeghe",
             "email": "jvandeweghe@kipsu.com"
-        }
+        },
+        {
+            "name": "Giuliano Schindler",
+            "email": "giuliano.schindler@netzfabrik.com"
+        },
     ],
     "require": {},
     "autoload": {
