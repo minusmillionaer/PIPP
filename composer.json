@@ -13,7 +13,7 @@
         {
             "name": "Giuliano Schindler",
             "email": "giuliano.schindler@netzfabrik.com"
-        },
+        }
     ],
     "require": {},
     "autoload": {
