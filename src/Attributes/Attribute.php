@@ -53,15 +53,17 @@ abstract class Attribute {
      * @param string $name
      * @param [] $values
      */
-    public function __construct($name, array $values) {
+    public function __construct($name, array $values)
+    {
         $this->name = $name;
-        foreach($values as $value) {
+        foreach ($values as $value) {
             $this->validateValue($value);
             $this->values[] = $value;
         }
     }
 
-    protected function validateValue($value) {
+    protected function validateValue($value)
+    {
         return;
         throw new \Exception(); //TODO: Write special exception for this
         //TODO: Make abstract, and use to validate length limits, ranges, etc
@@ -75,8 +77,9 @@ abstract class Attribute {
      * @throws UnknownAttributeTypeException
      */
     //TODO: Write validation into each attribute constructor
-    public static function factory($type, $name, $values) {
-        switch($type) {
+    public static function factory($type, $name, $values)
+    {
+        switch ($type) {
             case self::TYPE_OUT_OF_BAND_DEFAULT:
                 return new DefaultAttribute($name);
             case self::TYPE_OUT_OF_BAND_NO_VALUE:
@@ -143,20 +146,21 @@ abstract class Attribute {
     |                     value                   |   v bytes
     -----------------------------------------------
      */
-    public static function buildFromBinary($data) {
+    public static function buildFromBinary($data)
+    {
         /**
          * @var $attributes Attribute[]
          */
         $attributes = [];
 
-        if(!$data) {
+        if (!$data) {
             return $attributes;
         }
 
         $currentAttribute = 0;
         $bytePos = 0;
 
-        while($bytePos < strlen($data)) {
+        while ($bytePos < strlen($data)) {
             $type = ord(substr($data, $bytePos, 1));
 
             $nameLength = unpack("n", substr($data, $bytePos + 1, 2))[1];
@@ -168,7 +172,7 @@ abstract class Attribute {
             $length = 5 + $nameLength + $valueLength;
             $bytePos += $length;
 
-            if($name) {
+            if ($name) {
                 $attributes[$currentAttribute] = self::factory($type, $name, []);
                 $currentAttribute++;
             }
@@ -192,12 +196,13 @@ abstract class Attribute {
      */
     protected abstract function packValue($value);
 
-    public function toBinary() {
+    public function toBinary()
+    {
         $data = "";
         $first = true;
-        foreach($this->getValues() as $value) {
+        foreach ($this->getValues() as $value) {
             $data .= chr($this->getType());
-            if($first) {
+            if ($first) {
                 $data .= pack("n", strlen($this->getName()));
                 $data .= $this->getName();
 
@@ -215,7 +220,8 @@ abstract class Attribute {
         return $data;
     }
 
-    public function addRawValue($rawValue) {
+    public function addRawValue($rawValue)
+    {
         $value = $this->unpackValue($rawValue);
         $this->validateValue($value);
         $this->values[] = $value;
@@ -229,14 +235,16 @@ abstract class Attribute {
     /**
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
      * @return mixed[]
      */
-    public function getValues() {
+    public function getValues()
+    {
         return $this->values;
     }
 

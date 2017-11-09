@@ -8,7 +8,8 @@ use jvandeweghe\IPP\Server\Exceptions\UnsupportedOperationException;
 use jvandeweghe\IPP\Server\Logger\Logger;
 use jvandeweghe\IPP\Server\OperationHandlers\OperationHandler;
 
-class Server {
+class Server
+{
     /**
      * @var PrinterPool
      */
@@ -22,7 +23,8 @@ class Server {
      */
     private $logger;
 
-    public function __construct(PrinterPool $printerPool, OperationHandlerProvider $operationHandlerProvider, Logger $logger = null) {
+    public function __construct(PrinterPool $printerPool, OperationHandlerProvider $operationHandlerProvider, Logger $logger = null)
+    {
         $this->printerPool = $printerPool;
         $this->operationHandlerProvider = $operationHandlerProvider;
         $this->logger = $logger;
@@ -58,8 +60,9 @@ class Server {
     }
 
     //TODO: Maybe move this into Request?
-    private function routePrinter($url) {
-        if(!$url) {
+    private function routePrinter($url)
+    {
+        if (!$url) {
             return null;
         }
         $url = filter_var($url, FILTER_SANITIZE_URL);
@@ -69,8 +72,9 @@ class Server {
         return $this->printerPool->getPrinter($printer);
     }
 
-    public function log($message, $logLevel) {
-        if($this->logger) {
+    public function log($message, $logLevel)
+    {
+        if ($this->logger) {
             $this->logger->log($message, $logLevel);
         }
     }

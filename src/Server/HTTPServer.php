@@ -7,18 +7,21 @@ use jvandeweghe\IPP\Operation;
 use jvandeweghe\IPP\Server\Exceptions\InvalidRequestException;
 use jvandeweghe\IPP\Server\Logger\Logger;
 
-class HTTPServer {
+class HTTPServer
+{
     const IPP_CONTENT_TYPE = "application/ipp";
     protected $server;
 
-    public function __construct(Server $server) {
+    public function __construct(Server $server)
+    {
         $this->server = $server;
     }
 
     /**
      * @return Request
      */
-    public static function buildRequestFromGlobals() {
+    public static function buildRequestFromGlobals()
+    {
         $headers = getallheaders();
 
         $body = file_get_contents("php://input");
@@ -31,14 +34,15 @@ class HTTPServer {
      * @return Response
      * @throws InvalidRequestException
      */
-    public function handleRequest(Request $request) {
-        if($request->getHeaderByName("Content-Type") != self::IPP_CONTENT_TYPE){
+    public function handleRequest(Request $request)
+    {
+        if ($request->getHeaderByName("Content-Type") != self::IPP_CONTENT_TYPE) {
             return new Response(400);
         }
 
         try {
             $operation = Operation::buildFromBinary($request->getBody());
-        } catch(UnknownAttributeTypeException $exception) {
+        } catch (UnknownAttributeTypeException $exception) {
             $this->server->log("Got UnknownAttributeTypeException while parsing body: " . $exception->getMessage(), Logger::LEVEL_ERROR);
 
             return new Response(500);

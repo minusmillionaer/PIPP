@@ -4,24 +4,28 @@ namespace jvandeweghe\IPP\Server;
 
 use jvandeweghe\IPP\Server\Exceptions\UnsupportedOperationException;
 
-class FolderOperationHandlerProvider implements OperationHandlerProvider {
+class FolderOperationHandlerProvider implements OperationHandlerProvider
+{
 
     /**
      * @var string
      */
     private $globPattern;
 
-    public function __construct($globPattern) {
+    public function __construct($globPattern)
+    {
         $this->globPattern = $globPattern;
     }
 
     //TODO: Caching, this will be evoked on each request right now
-    public function getOperationHandlers() {
+    public function getOperationHandlers()
+    {
         $operationHandlers = [];
         foreach (glob($this->globPattern) as $file) {
             $class = $this->getOperationHandlerNamespace() . basename($file, '.php');
 
-            if (class_exists($class) && is_subclass_of($class, $this->getOperationHandlerNamespace() . "OperationHandler")) {
+            if (class_exists($class) && is_subclass_of($class, $this->getOperationHandlerNamespace() . "OperationHandler"))
+            {
                 $operationHandlers[] = $class;
             }
         }
@@ -29,7 +33,8 @@ class FolderOperationHandlerProvider implements OperationHandlerProvider {
         return $operationHandlers;
     }
 
-    private function getOperationHandlerNamespace() {
+    private function getOperationHandlerNamespace()
+    {
         return '\jvandeweghe\IPP\Server\OperationHandlers\\';
     }
 
@@ -38,9 +43,10 @@ class FolderOperationHandlerProvider implements OperationHandlerProvider {
      * @return string
      * @throws UnsupportedOperationException
      */
-    public function getOperationHandlersById($operationId){
+    public function getOperationHandlersById($operationId)
+    {
         $operationHandlers = $this->getOperationHandlers();
-        foreach($operationHandlers as $operationHandler) {
+        foreach ($operationHandlers as $operationHandler) {
             if ($operationHandler::getOperationId() == $operationId) {
                 return $operationHandler;
             }

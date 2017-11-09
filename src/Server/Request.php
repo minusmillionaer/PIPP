@@ -2,12 +2,14 @@
 
 namespace jvandeweghe\IPP\Server;
 
-class Request {
+class Request
+{
     protected $headers = [];
     protected $path;
     protected $body;
 
-    public function __construct($headers, $path, $body) {
+    public function __construct($headers, $path, $body)
+    {
         $this->headers = $headers;
         $this->path = $path;
         $this->body = $body;
@@ -16,13 +18,15 @@ class Request {
     /**
      * @return array
      */
-    public function getHeaders() {
+    public function getHeaders()
+    {
         return $this->headers;
     }
 
-    public function getHeaderByName($name) {
-        foreach($this->headers as $key => $value) {
-            if(strtolower($key) == strtolower($name)) {
+    public function getHeaderByName($name)
+    {
+        foreach ($this->headers as $key => $value) {
+            if (strtolower($key) == strtolower($name)) {
                 return $value;
             }
         }
@@ -33,14 +37,16 @@ class Request {
     /**
      * @return string
      */
-    public function getBody() {
+    public function getBody()
+    {
         return $this->body;
     }
 
     /**
      * @return string
      */
-    public function getPath() {
+    public function getPath()
+    {
         return $this->path;
     }
 

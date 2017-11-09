@@ -12,12 +12,14 @@ use jvandeweghe\IPP\Printer\Printer;
  * Class GetPrinterAttributesOperationHandler
  * @package jvandeweghe\IPP\Server\OperationHandlers
  */
-class GetPrinterAttributesOperationHandler implements OperationHandler {
+class GetPrinterAttributesOperationHandler implements OperationHandler
+{
 
     /**
      * @return int
      */
-    public function getOperationId() {
+    public function getOperationId()
+    {
         return Operation::OPERATION_GET_PRINTER_ATTRIBUTES;
     }
 
@@ -26,7 +28,8 @@ class GetPrinterAttributesOperationHandler implements OperationHandler {
      * @param Printer $printer
      * @return Operation
      */
-    public function handleOperation(Operation $operation, Printer $printer) {
+    public function handleOperation(Operation $operation, Printer $printer)
+    {
         $requestedAttributes = $operation->getAttributeByName("requested-attributes");
 
         $printerAttributes = $printer->getSupportedAttributes($requestedAttributes);

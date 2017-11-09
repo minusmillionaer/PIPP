@@ -3,7 +3,8 @@
 namespace jvandeweghe\IPP;
 
 //TODO: Handle improper data better
-class Operation {
+class Operation
+{
     //Delimiter tag: (RFC2910 Section 3.5.1)
     private static $END_OF_ATTRIBUTES_BOUNDARY = 0x03;
 
@@ -79,7 +80,8 @@ class Operation {
         -----------------------------------------------
 
      */
-    public static function buildFromBinary($body) {
+    public static function buildFromBinary($body)
+    {
         $majorVersion = unpack("C", substr($body, 0, 1))[1];
         $minorVersion = unpack("C", substr($body, 1, 1))[1];
         $operationIdOrStatusCode = unpack("n", substr($body, 2, 2))[1];
@@ -96,13 +98,14 @@ class Operation {
         return new Operation($majorVersion, $minorVersion, $operationIdOrStatusCode, $requestId, $attributeGroups, $data);
     }
 
-    public function toBinary() {
+    public function toBinary()
+    {
         $data = pack("C", $this->getMajorVersion());
         $data .= pack("C", $this->getMinorVersion());
         $data .= pack("n", $this->getOperationIdOrStatusCode());
         $data .= pack("N", $this->getRequestId());
 
-        foreach($this->getAttributeGroups() as $attributeGroup) {
+        foreach ($this->getAttributeGroups() as $attributeGroup) {
             $data .= $attributeGroup->toBinary();
         }
 
@@ -116,55 +119,60 @@ class Operation {
     /**
      * @return int
      */
-    public function getMajorVersion() {
+    public function getMajorVersion()
+    {
         return $this->majorVersion;
     }
 
     /**
      * @return int
      */
-    public function getMinorVersion() {
+    public function getMinorVersion()
+    {
         return $this->minorVersion;
     }
 
     /**
      * @return int
      */
-    public function getRequestId() {
+    public function getRequestId()
+    {
         return $this->requestId;
     }
 
     /**
      * @return int
      */
-    public function getOperationIdOrStatusCode() {
+    public function getOperationIdOrStatusCode()
+    {
         return $this->operationIdOrStatusCode;
     }
 
     /**
      * @return AttributeGroup[]
      */
-    public function getAttributeGroups() {
+    public function getAttributeGroups()
+    {
         return $this->attributeGroups;
     }
 
     /**
      * @return string
      */
-    public function getData() {
+    public function getData()
+    {
         return $this->data;
     }
 
 
-    public function getAttributeByName($name) {
-        foreach($this->getAttributeGroups() as $attributeGroup) {
-            if($attribute = $attributeGroup->getAttributeByName($name)) {
+    public function getAttributeByName($name)
+    {
+        foreach ($this->getAttributeGroups() as $attributeGroup) {
+            if ($attribute = $attributeGroup->getAttributeByName($name)) {
                 return $attribute;
             }
         }
 
         return null;
     }
-
-
 }

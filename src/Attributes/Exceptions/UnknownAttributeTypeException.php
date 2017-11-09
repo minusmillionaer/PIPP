@@ -2,6 +2,7 @@
 
 namespace jvandeweghe\IPP\Attributes\Exceptions;
 
-class UnknownAttributeTypeException extends \Exception {
-
+class UnknownAttributeTypeException extends \Exception
+{
+    //
 }

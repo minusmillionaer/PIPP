@@ -18,7 +18,8 @@ use jvandeweghe\IPP\Attributes\UnsupportedAttribute;
 use jvandeweghe\IPP\Attributes\URIAttribute;
 use jvandeweghe\IPP\Attributes\URISchemeAttribute;
 
-interface Printer {
+interface Printer
+{
 
     public function getIPPMajorVersion();
     public function getIPPMinorVersion();

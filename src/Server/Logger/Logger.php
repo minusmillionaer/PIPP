@@ -1,7 +1,8 @@
 <?php
 namespace jvandeweghe\IPP\Server\Logger;
 
-interface Logger {
+interface Logger
+{
     const LEVEL_INFO = 2;
     const LEVEL_WARNING = 4;
     const LEVEL_ERROR = 8;

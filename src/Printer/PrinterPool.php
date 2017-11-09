@@ -4,7 +4,8 @@ namespace jvandeweghe\IPP\Printer;
 
 use jvandeweghe\IPP\Printer\Exceptions\DuplicatePrinterException;
 
-class PrinterPool {
+class PrinterPool
+{
     protected $pool = [];
 
     /**
@@ -12,8 +13,9 @@ class PrinterPool {
      * @param Printer[] $printers
      * @throws DuplicatePrinterException
      */
-    public function __construct($printers = []){
-        foreach($printers as $printer) {
+    public function __construct($printers = [])
+    {
+        foreach ($printers as $printer) {
             $this->addPrinter($printer, $printer->getPrinterURISupported()->getValues()[0]);
         }
     }
@@ -23,8 +25,9 @@ class PrinterPool {
      * @param $path
      * @throws DuplicatePrinterException
      */
-    public function addPrinter(Printer $printer, $path) {
-        if(isset($this->pool[$path])) {
+    public function addPrinter(Printer $printer, $path)
+    {
+        if (isset($this->pool[$path])) {
             throw new DuplicatePrinterException("Printer paths within a pool must be unique");
         }
 
@@ -35,7 +38,8 @@ class PrinterPool {
      * @param $path
      * @return Printer|null
      */
-    public function getPrinter($path) {
+    public function getPrinter($path)
+    {
         return isset($this->pool[$path]) ? $this->pool[$path] : null;
     }
 }

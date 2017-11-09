@@ -18,7 +18,8 @@ use jvandeweghe\IPP\Attributes\UnsupportedAttribute;
 use jvandeweghe\IPP\Attributes\URIAttribute;
 use jvandeweghe\IPP\Attributes\URISchemeAttribute;
 
-class DefaultPrinter implements Printer {
+class DefaultPrinter implements Printer
+{
 //4.4 Printer Description Attributes
     /**
      * @var URIAttribute
@@ -241,7 +242,8 @@ class DefaultPrinter implements Printer {
         $this->pagesPerMinuteColor = new UnsupportedAttribute("pages-per-minute-color");
     }
 
-    public static function createFromValues($uri, $printerName){
+    public static function createFromValues($uri, $printerName)
+    {
         return new DefaultPrinter(
             new URIAttribute('printer-uri-supported', [$uri]),
             new KeywordAttribute('uri-security-supported', ["none"]),
@@ -269,286 +271,328 @@ class DefaultPrinter implements Printer {
      * @param KeywordAttribute $requestedAttributes
      * @return \jvandeweghe\IPP\Attributes\Attribute[]
      */
-    public function getSupportedAttributes($requestedAttributes) {
+    public function getSupportedAttributes($requestedAttributes)
+    {
         $attributes = [];
-        foreach($this as $attribute) {
-          if( !($attribute instanceof UnsupportedAttribute) && in_array($attribute->getName(), $requestedAttributes->getValues())){
-              $attributes[] = $attribute;
-          }
+        foreach ($this as $attribute) {
+            if (!($attribute instanceof UnsupportedAttribute) && in_array($attribute->getName(), $requestedAttributes->getValues()))
+            {
+                $attributes[] = $attribute;
+            }
         }
 
         return $attributes;
     }
 
 
-    public function getUnsupportedAttributes() {
+    public function getUnsupportedAttributes()
+    {
         return [];
     }
 
     /**
      * @return URIAttribute
      */
-    public function getPrinterURISupported() {
+    public function getPrinterURISupported()
+    {
         return $this->printerURISupported;
     }
 
     /**
      * @return KeywordAttribute
      */
-    public function getUriSecuritySupported() {
+    public function getUriSecuritySupported()
+    {
         return $this->uriSecuritySupported;
     }
 
     /**
      * @return KeywordAttribute
      */
-    public function getUriAuthenticationSupported() {
+    public function getUriAuthenticationSupported()
+    {
         return $this->uriAuthenticationSupported;
     }
 
     /**
      * @return NameWithoutLanguageAttribute
      */
-    public function getPrinterName() {
+    public function getPrinterName()
+    {
         return $this->printerName;
     }
 
     /**
      * @return NoValueAttribute|TextWithoutLanguageAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPrinterLocation() {
+    public function getPrinterLocation()
+    {
         return $this->printerLocation;
     }
 
     /**
      * @return NoValueAttribute|TextWithoutLanguageAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPrinterInfo() {
+    public function getPrinterInfo()
+    {
         return $this->printerInfo;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute|URIAttribute
      */
-    public function getPrinterMoreInfo() {
+    public function getPrinterMoreInfo()
+    {
         return $this->printerMoreInfo;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute|URIAttribute
      */
-    public function getPrinterDriverInstaller() {
+    public function getPrinterDriverInstaller()
+    {
         return $this->printerDriverInstaller;
     }
 
     /**
      * @return NoValueAttribute|TextWithoutLanguageAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPrinterMakeAndModel() {
+    public function getPrinterMakeAndModel()
+    {
         return $this->printerMakeAndModel;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute|URIAttribute
      */
-    public function getPrinterMoreInfoManufacturer() {
+    public function getPrinterMoreInfoManufacturer()
+    {
         return $this->printerMoreInfoManufacturer;
     }
 
     /**
      * @return EnumAttribute
      */
-    public function getPrinterState() {
+    public function getPrinterState()
+    {
         return $this->printerState;
     }
 
     /**
      * @return KeywordAttribute
      */
-    public function getPrinterStateReasons() {
+    public function getPrinterStateReasons()
+    {
         return $this->printerStateReasons;
     }
 
     /**
      * @return NoValueAttribute|TextWithoutLanguageAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPrinterStateMessage() {
+    public function getPrinterStateMessage()
+    {
         return $this->printerStateMessage;
     }
 
     /**
      * @return KeywordAttribute
      */
-    public function getIppVersionsSupported() {
+    public function getIppVersionsSupported()
+    {
         return $this->ippVersionsSupported;
     }
 
     /**
      * @return KeywordAttribute
      */
-    public function getOperationsSupported() {
+    public function getOperationsSupported()
+    {
         return $this->operationsSupported;
     }
 
     /**
      * @return BooleanAttribute|NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getMultipleDocumentJobsSupported() {
+    public function getMultipleDocumentJobsSupported()
+    {
         return $this->multipleDocumentJobsSupported;
     }
 
     /**
      * @return CharsetAttribute
      */
-    public function getCharsetConfigured() {
+    public function getCharsetConfigured()
+    {
         return $this->charsetConfigured;
     }
 
     /**
      * @return CharsetAttribute
      */
-    public function getCharsetSupported() {
+    public function getCharsetSupported()
+    {
         return $this->charsetSupported;
     }
 
     /**
      * @return NaturalLanguageAttribute
      */
-    public function getNaturalLanguageConfigured() {
+    public function getNaturalLanguageConfigured()
+    {
         return $this->naturalLanguageConfigured;
     }
 
     /**
      * @return NaturalLanguageAttribute
      */
-    public function getGeneratedNaturalLanguageSupported() {
+    public function getGeneratedNaturalLanguageSupported()
+    {
         return $this->generatedNaturalLanguageSupported;
     }
 
     /**
      * @return MIMEMediaTypeAttribute
      */
-    public function getDocumentFormatDefault() {
+    public function getDocumentFormatDefault()
+    {
         return $this->documentFormatDefault;
     }
 
     /**
      * @return MIMEMediaTypeAttribute
      */
-    public function getDocumentFormatSupported() {
+    public function getDocumentFormatSupported()
+    {
         return $this->documentFormatSupported;
     }
 
     /**
      * @return BooleanAttribute
      */
-    public function getPrinterIsAcceptingJobs() {
+    public function getPrinterIsAcceptingJobs()
+    {
         return $this->printerIsAcceptingJobs;
     }
 
     /**
      * @return IntegerAttribute
      */
-    public function getQueuedJobCount() {
+    public function getQueuedJobCount()
+    {
         return $this->queuedJobCount;
     }
 
     /**
      * @return NoValueAttribute|TextWithoutLanguageAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPrinterMessageFromOperator() {
+    public function getPrinterMessageFromOperator()
+    {
         return $this->printerMessageFromOperator;
     }
 
     /**
      * @return BooleanAttribute|NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getColorSupported() {
+    public function getColorSupported()
+    {
         return $this->colorSupported;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute|URISchemeAttribute
      */
-    public function getReferenceURISchemesSupported() {
+    public function getReferenceURISchemesSupported()
+    {
         return $this->referenceURISchemesSupported;
     }
 
     /**
      * @return KeywordAttribute
      */
-    public function getPdlOverrideSupported() {
+    public function getPdlOverrideSupported()
+    {
         return $this->pdlOverrideSupported;
     }
 
     /**
      * @return IntegerAttribute
      */
-    public function getPrinterUpTime() {
+    public function getPrinterUpTime()
+    {
         return $this->printerUpTime;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPrinterCurrentTime() {
+    public function getPrinterCurrentTime()
+    {
         return $this->printerCurrentTime;
     }
 
     /**
      * @return IntegerAttribute|NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getMultipleOperationTimeOut() {
+    public function getMultipleOperationTimeOut()
+    {
         return $this->multipleOperationTimeOut;
     }
 
     /**
      * @return KeywordAttribute
      */
-    public function getCompressionSupported() {
+    public function getCompressionSupported()
+    {
         return $this->compressionSupported;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getJobKOctetsSupported() {
+    public function getJobKOctetsSupported()
+    {
         return $this->jobKOctetsSupported;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getJobImpressionsSupported() {
+    public function getJobImpressionsSupported()
+    {
         return $this->jobImpressionsSupported;
     }
 
     /**
      * @return NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getJobMediaSheetsSupported() {
+    public function getJobMediaSheetsSupported()
+    {
         return $this->jobMediaSheetsSupported;
     }
 
     /**
      * @return IntegerAttribute|NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPagesPerMinute() {
+    public function getPagesPerMinute()
+    {
         return $this->pagesPerMinute;
     }
 
     /**
      * @return IntegerAttribute|NoValueAttribute|UnknownAttribute|UnsupportedAttribute
      */
-    public function getPagesPerMinuteColor() {
+    public function getPagesPerMinuteColor()
+    {
         return $this->pagesPerMinuteColor;
     }
 
-    public function getIPPMajorVersion() {
+    public function getIPPMajorVersion()
+    {
         return 1;
     }
 
-    public function getIPPMinorVersion() {
+    public function getIPPMinorVersion()
+    {
         return 1;
     }
 
